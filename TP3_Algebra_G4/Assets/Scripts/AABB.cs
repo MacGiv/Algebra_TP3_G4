@@ -10,8 +10,10 @@ public class AABB : MonoBehaviour
     Vector3[] vertices;
     Vector3 worldVertex;
     Mesh mesh;
-    private Vector3 minPoint;
-    private Vector3 maxPoint;
+    public Vector3 minPoint;
+    public Vector3 maxPoint;
+    public Color color;
+    public Color defaultColor;
 
     private void Awake()
     {
@@ -21,11 +23,18 @@ public class AABB : MonoBehaviour
         // Transformar el primer vertice a coordenadas globales
         worldVertex = transform.TransformPoint(vertices[0]);
 
+        defaultColor = Color.cyan;
+        color = defaultColor;
     }
 
     void Update()
     {
         CalculateAABB();
+    }
+
+    public void SetColor(Color color)
+    {
+        this.color = color;
     }
 
     void CalculateAABB()
@@ -59,7 +68,7 @@ public class AABB : MonoBehaviour
             CalculateAABB();
         }
 
-        Gizmos.color = Color.cyan;
+        Gizmos.color = color;
 
         // Dibujar los bordes de la AABB usando las esquinas de la box
         Gizmos.DrawLine(new Vector3(minPoint.x, minPoint.y, minPoint.z), new Vector3(minPoint.x, maxPoint.y, minPoint.z));
